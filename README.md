@@ -1,168 +1,203 @@
 # CareerForge AI 🚀
 
 > A free, multi-agent AI career coaching system powered by **Amazon Nova** on AWS Bedrock.  
-> Built for the **Amazon Nova AI Hackathon** — Agentic AI Category.
+> Built for the **Amazon Nova AI Hackathon 2026 — Agentic AI Category | Prize Pool: $40,000 USD**
 
 ---
 
-## 🎯 What it does
-## Live Demo 🚀
-- **Frontend** (Vercel): `[To be deployed]`
-- **Backend** (Render): `[To be deployed]`
+## 🔗 Live Demo
+- **Frontend** (Vercel): `[deploy frontend/ to Vercel]`
+- **Backend** (Render): `[deploy api.py to Render]`
 
-## Features
-- **Modern Web Application**: Blazing fast front-end built with React, Vite, Tailwind CSS, and Framer Motion.
-- **RESTful API**: Fast and asynchronous backend powered by FastAPI.
-- **Agentic Workflow**: A pipeline of 5 specialized agents that analyze profiles, extract market trends, identify skill gaps, and generate customized roadmaps.
-- **Mock Interviews**: Interactive mock interview simulator powered by Nova Lite (questions) and Nova Pro (evaluation).
+---
 
-## Architecture
+## ✨ Features
+
+- **Premium React UI** — Built with Vite, Tailwind CSS, Framer Motion, and DM Sans — Linear/Vercel-inspired dark design
+- **5 Specialized AI Agents** — Each powered by Amazon Nova, running in a sequential agentic pipeline
+- **30/60/90 Day Roadmap** — Personalized, free-resource action plan with portfolio projects and industry tips
+- **Gap Analysis** — Critical skill gaps ranked by importance with strengths highlighted
+- **Mock Interview** — AI-generated role-specific questions (conceptual, coding, behavioral) with hints
+- **FastAPI Backend** — Clean REST API replacing Streamlit, ready for production deployment
+- **100% Free Resources** — Every roadmap recommendation uses free tools (YouTube, freeCodeCamp, LeetCode, GitHub)
+
+---
+
+## 🏗️ Architecture
+
 ```
-[User Resume PDF & GitHub] 
-        ↓ (Upload via React Frontend)
-[FastAPI Backend /orchestrator]
-        ↓ 
-1. Profile Analyst (Nova Lite)
-        ↓
-2. Market Intel Analyst (Nova Lite)
-        ↓
-3. Gap Analyst (Nova Lite)
-        ↓
-4. Roadmap Generator (Nova Pro)
-        ↓
-[ JSON Multi-Agent Output ]
-        ↓
-[React UI Dashboard (Gaps, Roadmap, Intervew)]
+[User] → uploads PDF + inputs via React Frontend
+         ↓
+[FastAPI /analyze endpoint]
+         ↓
+┌─────────────────────────────────────────┐
+│  1. Profile Analyst     (Nova Lite)     │  ← Parses resume, GitHub, skills
+│  2. Market Intel        (Nova Lite)     │  ← Benchmarks target companies
+│  3. Gap Analyst         (Nova Lite)     │  ← Ranks skill gaps
+│  4. Roadmap Generator   (Nova Pro)      │  ← 30/60/90 day plan + projects
+│  5. Mock Interview      (Nova Lite)     │  ← Interview questions with hints
+└─────────────────────────────────────────┘
+         ↓
+[React Dashboard] → Overview · Gaps · Roadmap · Interview tabs
 ```
 
-**Framework:** Strands Agents (Amazon's official agents framework)  
-**Models Used:** Amazon Nova Pro, Nova Lite  
+**Models:** Amazon Nova Pro, Amazon Nova Lite  
 **Cloud:** AWS Bedrock (us-east-1)
 
 ---
 
-## 📁 Folder Structure
+## 📁 Project Structure
 
 ```
 careerforge-ai/
-├── main.py                    ← Streamlit UI entry point
-├── requirements.txt           ← Python dependencies
+├── api.py                     ← FastAPI app (main entry point)
+├── main.py                    ← Legacy Streamlit UI (kept for reference)
+├── requirements.txt
+├── render.yaml                ← Render.com backend deploy config
 ├── .env                       ← AWS credentials (never commit!)
-├── .gitignore
 │
 ├── agents/
-│   ├── orchestrator.py        ← Coordinates all agents
-│   ├── profile_analyst.py     ← Parses resume (Nova Lite)
-│   ├── market_intel.py        ← Company benchmarking (Nova Lite)
-│   ├── gap_analyst.py         ← Skill gap analysis (Nova Lite)
-│   ├── roadmap_generator.py   ← 30/60/90 day plan (Nova Pro)
-│   └── mock_interview.py      ← Interview Q&A + feedback (Nova Pro)
+│   ├── orchestrator.py        ← Runs all 5 agents in sequence
+│   ├── profile_analyst.py     ← Resume + GitHub parser (Nova Lite)
+│   ├── market_intel.py        ← Company skill benchmarking (Nova Lite)
+│   ├── gap_analyst.py         ← Skill gap ranker (Nova Lite)
+│   ├── roadmap_generator.py   ← 90-day roadmap + projects (Nova Pro)
+│   └── mock_interview.py      ← Interview Q&A generator (Nova Lite)
 │
-└── utils/
-    ├── bedrock_client.py      ← Shared AWS Bedrock client
-    └── resume_parser.py       ← PDF text extractor
+├── utils/
+│   ├── bedrock_client.py      ← Shared AWS Bedrock client
+│   └── resume_parser.py       ← PDF text extractor
+│
+└── frontend/                  ← React + Vite application
+    ├── index.html
+    ├── package.json
+    ├── tailwind.config.js
+    ├── postcss.config.js
+    ├── vite.config.js
+    ├── .env.local             ← VITE_API_URL (never commit!)
+    └── src/
+        ├── App.jsx            ← Main app + all components
+        ├── index.css          ← Global styles + DM Sans font
+        └── main.jsx
 ```
 
 ---
 
-## ⚡ Quick Start
+## ⚡ Local Setup
 
-### 1. Clone the repo
+### Prerequisites
+- Python 3.10+
+- Node.js 18+
+- AWS account with Bedrock access (Nova Pro + Nova Lite enabled)
+
+### 1. Clone & backend setup
 ```bash
 git clone https://github.com/namanraii/careerforge-ai.git
 cd careerforge-ai
-```
 
-### 2. Create a virtual environment
-```bash
 python3 -m venv venv
-source venv/bin/activate   # On Windows: venv\Scripts\activate
-```
-
-### 3. Install dependencies
-```bash
+source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 4. Add AWS credentials
-Create a `.env` file in the project root:
+### 2. AWS credentials
+Create `.env` in the project root:
 ```
 AWS_ACCESS_KEY_ID=your_access_key_here
 AWS_SECRET_ACCESS_KEY=your_secret_key_here
 AWS_DEFAULT_REGION=us-east-1
 ```
 
-> ⚠️ You need AWS Bedrock access. Enable **Amazon Nova Pro** and **Amazon Nova Lite** models in the [AWS Bedrock console](https://console.aws.amazon.com/bedrock/).
+> ⚠️ Enable **Amazon Nova Pro** and **Nova Lite** in the [AWS Bedrock console](https://console.aws.amazon.com/bedrock/) → Model access.
 
-### Running the Application Locally
-
-The project is split into a backend API and a frontend React app. You'll need two terminal windows.
-
-**Terminal 1: Start the FastAPI Backend**
+### 3. Start the FastAPI backend
 ```bash
-# Ensure virtual environment is active
 source venv/bin/activate
-# Start Uvicorn server
 uvicorn api:app --reload --port 8000
+# API docs at http://localhost:8000/docs
 ```
-Backend API will be running at `http://localhost:8000/docs`.
 
-**Terminal 2: Start the React Frontend**
+### 4. Start the React frontend
 ```bash
 cd frontend
-# Install node packages if you haven't yet
 npm install
-# Start Vite development server
+cp .env.local.example .env.local  # or create manually
+# Add: VITE_API_URL=http://localhost:8000
 npm run dev
+# App at http://localhost:5173
 ```
-Frontend will be running at `http://localhost:5173`. Open this URL in your browser to use the app!
 
 ---
 
 ## 🤖 Agent Details
 
-| Agent | Model | Input | Output |
-|---|---|---|---|
-| Profile Analyst | Nova Lite | Resume PDF text | JSON: skills, education, experience |
-| Market Intel | Nova Lite | Target companies + role | Required skills per company |
-| Gap Analyst | Nova Lite | Profile + Market data | Skill gaps ranked by importance |
-| Roadmap Generator | Nova Pro | Gaps + profile | 30/60/90 day free-resource plan |
-| Mock Interview | Nova Pro + Lite | Role + gaps | Interview Q&A with AI feedback |
+| Agent | Model | Output |
+|---|---|---|
+| Profile Analyst | Nova Lite | Skills, education, projects, experience level |
+| Market Intel | Nova Lite | Required skills per target company |
+| Gap Analyst | Nova Lite | Ranked skill gaps + strengths + readiness score |
+| Roadmap Generator | Nova Pro | 30/60/90 day plan, key projects, interview tips |
+| Mock Interview | Nova Lite | 5 role-specific questions (conceptual/coding/behavioral) |
+
+---
+
+## 🚀 Deployment (Free Tier)
+
+### Backend → Render
+```bash
+# render.yaml is already configured
+# Push to GitHub → connect repo on render.com → auto-deploys
+# Set env vars: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_DEFAULT_REGION
+```
+
+### Frontend → Vercel
+```bash
+# Connect the /frontend folder to Vercel
+# Set env var: VITE_API_URL=https://your-render-backend.onrender.com
+```
 
 ---
 
 ## 💰 AWS Cost Estimate
 
-| Model | Price | Est. Usage | Est. Cost |
-|---|---|---|---|
-| Nova Lite | $0.0006 / 1K tokens | ~500K tokens | ~$0.30 |
-| Nova Pro | $0.0080 / 1K tokens | ~100K tokens | ~$0.80 |
-| **TOTAL** | | | **~$1.10** |
+| Model | Rate | Est. per analysis |
+|---|---|---|
+| Nova Lite | $0.0006 / 1K tokens | ~$0.002 |
+| Nova Pro | $0.0080 / 1K tokens | ~$0.018 |
+| **Per analysis** | | **~$0.02** |
+
+Fits comfortably within AWS free tier for hackathon use.
 
 ---
 
 ## 🌍 Impact
 
-Over **400 million students** in developing nations have no access to professional career coaching. CareerForge AI democratizes this by providing **expert-level, personalized career guidance entirely free**, running on AWS infrastructure that scales globally.
+Over **400 million students** in developing nations have zero access to professional career coaching. CareerForge AI democratizes this — providing expert-level, personalized guidance entirely free, running on AWS infrastructure that scales globally.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **AI Models:** Amazon Nova Pro, Amazon Nova Lite
-- **Framework:** Strands Agents (Amazon)
-- **Backend:** Python + boto3
-- **Frontend:** Streamlit
-- **Cloud:** AWS Bedrock (us-east-1)
+| Layer | Technology |
+|---|---|
+| AI Models | Amazon Nova Pro, Amazon Nova Lite |
+| AI Cloud | AWS Bedrock (us-east-1) |
+| Backend API | FastAPI + Uvicorn |
+| PDF Parsing | PyMuPDF / pdfplumber |
+| Frontend | React 18 + Vite |
+| Styling | Tailwind CSS v3 |
+| Animations | Framer Motion |
+| Typography | DM Sans (Google Fonts) |
+| Deployment | Vercel (frontend) + Render (backend) |
 
 ---
 
 ## 👤 Author
 
 **Naman Rai**  
-SRM University | namanrai23@gmail.com  
+SRM Institute of Science and Technology | namanrai23@gmail.com  
 GitHub: [github.com/namanraii](https://github.com/namanraii)
 
 ---
 
-> *Built for the Amazon Nova AI Hackathon 2026 — Agentic AI Category | Prize Pool: $40,000 USD*
+> *Built for the Amazon Nova AI Hackathon 2026 — Agentic AI Category*
