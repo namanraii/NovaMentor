@@ -7,7 +7,7 @@
 
 ## 🔗 Live Demo
 - **Frontend** (Vercel): `[deploy frontend/ to Vercel]`
-- **Backend** (Render): `[deploy api.py to Render]`
+- **Backend** (Render): `https://novamentor-api.onrender.com`
 
 ---
 
