@@ -92,7 +92,7 @@ novamentor/
 
 ### 1. Clone & backend setup
 ```bash
-git clone https://github.com/namanraii/novamentor.git
+git clone https://github.com/namanraii/NovaMentor.git
 cd novamentor
 
 python3 -m venv venv
