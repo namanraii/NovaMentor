@@ -10,11 +10,11 @@ load_dotenv()
 
 app = FastAPI(title='NovaMentor', version='1.0.0')
 
-# Allow React dev server to call this API
+# Allow React dev server and Vercel to call this API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['http://localhost:5173', 'https://*.vercel.app'],
-    allow_credentials=True,
+    allow_origins=['*'],
+    allow_credentials=False,
     allow_methods=['*'],
     allow_headers=['*'],
 )
