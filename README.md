@@ -6,30 +6,33 @@
 ---
 
 ## 🎯 What it does
+## Live Demo 🚀
+- **Frontend** (Vercel): `[To be deployed]`
+- **Backend** (Render): `[To be deployed]`
 
-CareerForge AI acts as a free, 24/7 career coach for students in tier-2/3 cities and developing nations who cannot afford human career counselors.
+## Features
+- **Modern Web Application**: Blazing fast front-end built with React, Vite, Tailwind CSS, and Framer Motion.
+- **RESTful API**: Fast and asynchronous backend powered by FastAPI.
+- **Agentic Workflow**: A pipeline of 5 specialized agents that analyze profiles, extract market trends, identify skill gaps, and generate customized roadmaps.
+- **Mock Interviews**: Interactive mock interview simulator powered by Nova Lite (questions) and Nova Pro (evaluation).
 
-**Upload your resume + GitHub URL, select target companies, and five specialized AI agents:**
-
-1. 📄 **Profile Analyst** (Nova Lite) — Parses your resume into a structured profile
-2. 🏢 **Market Intel** (Nova Lite) — Benchmarks top tech company skill requirements
-3. 🔎 **Gap Analyst** (Nova Lite) — Identifies your critical skill gaps
-4. 🗓️ **Roadmap Generator** (Nova Pro) — Creates a personalized 30/60/90 day learning plan
-5. 🎤 **Mock Interview** (Nova Pro + Nova Lite) — AI-powered interview Q&A with feedback
-
----
-
-## 🏗️ Architecture
-
+## Architecture
 ```
-User (Resume PDF + GitHub URL + Target Companies)
+[User Resume PDF & GitHub] 
+        ↓ (Upload via React Frontend)
+[FastAPI Backend /orchestrator]
+        ↓ 
+1. Profile Analyst (Nova Lite)
         ↓
-  Orchestrator Agent  (Nova Pro — decides sequencing)
-   ↓       ↓        ↓          ↓           ↓
-Profile  Market   Gap      Roadmap    Mock Interview
-Analyst  Intel    Analyst  Generator  Agent
-   ↓       ↓        ↓          ↓           ↓
-         Final Career Report + Voice Practice
+2. Market Intel Analyst (Nova Lite)
+        ↓
+3. Gap Analyst (Nova Lite)
+        ↓
+4. Roadmap Generator (Nova Pro)
+        ↓
+[ JSON Multi-Agent Output ]
+        ↓
+[React UI Dashboard (Gaps, Roadmap, Intervew)]
 ```
 
 **Framework:** Strands Agents (Amazon's official agents framework)  
@@ -91,12 +94,28 @@ AWS_DEFAULT_REGION=us-east-1
 
 > ⚠️ You need AWS Bedrock access. Enable **Amazon Nova Pro** and **Amazon Nova Lite** models in the [AWS Bedrock console](https://console.aws.amazon.com/bedrock/).
 
-### 5. Run the app
-```bash
-streamlit run main.py
-```
+### Running the Application Locally
 
-Open [http://localhost:8501](http://localhost:8501) in your browser.
+The project is split into a backend API and a frontend React app. You'll need two terminal windows.
+
+**Terminal 1: Start the FastAPI Backend**
+```bash
+# Ensure virtual environment is active
+source venv/bin/activate
+# Start Uvicorn server
+uvicorn api:app --reload --port 8000
+```
+Backend API will be running at `http://localhost:8000/docs`.
+
+**Terminal 2: Start the React Frontend**
+```bash
+cd frontend
+# Install node packages if you haven't yet
+npm install
+# Start Vite development server
+npm run dev
+```
+Frontend will be running at `http://localhost:5173`. Open this URL in your browser to use the app!
 
 ---
 
