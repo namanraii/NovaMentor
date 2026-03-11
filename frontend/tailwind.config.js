@@ -16,8 +16,8 @@ export default {
         }
       },
       fontFamily: {
-        display: ["'Syne'", 'sans-serif'],
-        mono: ["'Space Mono'", 'monospace'],
+        display: ["'Inter'", 'system-ui', 'sans-serif'],
+        mono: ["'JetBrains Mono'", 'ui-monospace', 'monospace'],
       },
       animation: {
         'pulse-cyan': 'pulse-cyan 2s ease-in-out infinite',

@@ -1,140 +1,116 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Mic, MessageSquare, Target, ThumbsUp, ChevronRight, XCircle } from 'lucide-react'
+import { MessageSquare, Target, ThumbsUp, ChevronRight, XCircle, Layers } from 'lucide-react'
 
-export default function MockInterview({ questions = [] }) {
+export default function MockInterview({ mockInterview }) {
   const [selectedIdx, setSelectedIdx] = useState(0)
 
-  if (!questions || questions.length === 0) return (
-    <div className="text-gray-400 p-8 text-center bg-[#0a1628] rounded-2xl border border-[#1e3a5f]">
+  // Handle the data structure: { role, questions: [{id, type, question, hints, difficulty}], total_questions }
+  const questions = mockInterview?.questions || []
+
+  if (!mockInterview || questions.length === 0) return (
+    <div className="text-gray-500 p-10 text-center bg-white/5 rounded-2xl border border-white/10">
       No mock interview data generated.
     </div>
   )
 
   const activeQ = questions[selectedIdx] || {}
-  const score = activeQ?.feedback?.score || 0
+
+  // Score only exists once user answers — for now show question view
+  const TYPE_COLOR = {
+    conceptual: 'text-sky-400 bg-sky-500/10 border-sky-500/30',
+    coding: 'text-violet-400 bg-violet-500/10 border-violet-500/30',
+    behavioral: 'text-amber-400 bg-amber-500/10 border-amber-500/30',
+  }
+  const DIFF_COLOR = {
+    easy: 'text-emerald-400',
+    medium: 'text-amber-400',
+    hard: 'text-red-400',
+  }
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6 h-[600px] max-h-[80vh]">
-      
-      {/* Left Sidebar: Question List */}
-      <div className="w-full lg:w-1/3 flex flex-col gap-3 overflow-y-auto pr-2 custom-scrollbar">
+    <div className="flex flex-col lg:flex-row gap-5">
+
+      {/* Left: Question List */}
+      <div className="w-full lg:w-64 shrink-0 flex flex-col gap-2">
+        <p className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">
+          {mockInterview.role} Interview
+        </p>
         {questions.map((q, i) => {
           const isActive = selectedIdx === i
-          const qScore = q?.feedback?.score || 0
-          
           return (
             <button
-              key={i} onClick={() => setSelectedIdx(i)}
-              className={`text-left p-4 rounded-xl border transition-all ${
-                isActive 
-                  ? 'bg-cyan-500/10 border-cyan-500 shadow-[0_0_10px_rgba(0,212,255,0.2)]' 
-                  : 'bg-[#0a1628] border-[#1e3a5f] hover:border-gray-500'
+              key={i}
+              onClick={() => setSelectedIdx(i)}
+              className={`text-left p-4 rounded-xl border transition-all duration-200 ${
+                isActive
+                  ? 'bg-white/[0.06] border-white/20 text-white'
+                  : 'bg-white/[0.02] border-white/5 text-gray-400 hover:border-white/15 hover:text-gray-200'
               }`}
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold font-mono text-gray-400">Q {i+1} / 5</span>
-                <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${
-                  qScore >= 8 ? 'bg-green-500/20 text-green-400' : qScore >= 5 ? 'bg-amber-500/20 text-amber-400' : 'bg-red-500/20 text-red-400'
-                }`}>
-                  {qScore}/10
+                <span className="font-mono text-xs text-gray-600">Q{i + 1}</span>
+                <span className={`text-xs font-medium capitalize ${DIFF_COLOR[q.difficulty] || 'text-gray-400'}`}>
+                  {q.difficulty}
                 </span>
               </div>
-              <p className={`text-sm line-clamp-2 ${isActive ? 'text-white font-medium' : 'text-gray-400'}`}>
-                {q.question}
-              </p>
+              <p className="text-sm line-clamp-2 leading-snug">{q.question}</p>
             </button>
           )
         })}
       </div>
 
-      {/* Right Content: Analysis Panel */}
-      <div className="w-full lg:w-2/3 bg-[#0a1628] border border-[#1e3a5f] rounded-2xl overflow-hidden flex flex-col relative">
-        <div className="absolute top-0 right-0 p-4 opacity-10">
-          <Mic className="w-32 h-32" />
-        </div>
-        
+      {/* Right: Question Detail Panel */}
+      <div className="flex-1">
         <AnimatePresence mode="wait">
           <motion.div
             key={selectedIdx}
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}
-            className="flex-1 overflow-y-auto p-6 md:p-8 custom-scrollbar space-y-8 z-10"
+            initial={{ opacity: 0, x: 10 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -10 }}
+            transition={{ duration: 0.2 }}
+            className="bg-white/[0.025] border border-white/10 rounded-2xl p-7 space-y-7"
           >
-            {/* The Question */}
+            {/* Type badge + question */}
             <div>
-              <div className="flex items-center gap-3 text-cyan-400 mb-3">
-                <MessageSquare className="w-5 h-5" />
-                <h3 className="font-bold uppercase tracking-widest text-xs">Interview Question</h3>
+              <div className="flex items-center gap-3 mb-4">
+                <span className={`text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full border capitalize ${TYPE_COLOR[activeQ.type] || 'text-gray-400 bg-white/5 border-white/10'}`}>
+                  {activeQ.type}
+                </span>
+                <span className={`text-xs font-medium capitalize ${DIFF_COLOR[activeQ.difficulty] || 'text-gray-400'}`}>
+                  {activeQ.difficulty} difficulty
+                </span>
               </div>
-              <p className="text-xl md:text-2xl font-bold leading-relaxed">{activeQ.question}</p>
+              <h3 className="text-xl font-bold text-white leading-relaxed">{activeQ.question}</h3>
             </div>
 
-            {/* Feedback Block */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              
-              {/* Score & Category */}
-              <div className="bg-[#020817] border border-[#1e3a5f] rounded-xl p-5 flex flex-col justify-center items-center text-center">
-                <div className="relative w-24 h-24 flex items-center justify-center mb-3">
-                  <svg className="absolute w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="40" fill="none" stroke="#1e3a5f" strokeWidth="8" />
-                    <circle cx="50" cy="50" r="40" fill="none" stroke={score >= 8 ? '#10b981' : score >= 5 ? '#f59e0b' : '#ef4444'} strokeWidth="8" strokeDasharray={`${(score/10)*251} 251`} className="transition-all duration-1000" />
-                  </svg>
-                  <span className="text-3xl font-black font-display">{score}</span>
-                </div>
-                <div className="text-gray-400 text-sm font-semibold uppercase tracking-wider">
-                   Amazon Nova Score
-                </div>
-              </div>
-
-              {/* Strengths & Weaknesses */}
-              <div className="space-y-4">
-                <div className="bg-[#020817] border border-green-500/20 rounded-xl p-4">
-                  <h4 className="flex items-center gap-2 text-green-400 font-bold mb-2 text-sm"><ThumbsUp className="w-4 h-4"/> Strengths</h4>
-                  <p className="text-sm text-gray-300">{activeQ?.feedback?.strengths || 'Good response.'}</p>
-                </div>
-                <div className="bg-[#020817] border border-red-500/20 rounded-xl p-4">
-                  <h4 className="flex items-center gap-2 text-red-400 font-bold mb-2 text-sm"><XCircle className="w-4 h-4"/> Needs Improvement</h4>
-                  <p className="text-sm text-gray-300">{activeQ?.feedback?.improvements || 'Could be more detailed.'}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Ideal Answer & Followup */}
-            <div className="space-y-6 pt-6 border-t border-[#1e3a5f]/50">
+            {/* Hints */}
+            {activeQ.hints && activeQ.hints.length > 0 && (
               <div>
-                <h4 className="flex items-center gap-2 text-cyan-400 font-bold mb-3"><Target className="w-4 h-4"/> Ideal Answer Structure</h4>
-                <div className="p-5 bg-[#020817] border border-[#1e3a5f] rounded-xl">
-                  <ul className="space-y-3">
-                    {Array.isArray(activeQ?.feedback?.ideal_answer_outline) ? 
-                      activeQ.feedback.ideal_answer_outline.map((item, id) => (
-                        <li key={id} className="text-sm text-gray-300 flex items-start gap-3">
-                          <ChevronRight className="w-4 h-4 text-cyan-500 shrink-0 mt-0.5" />
-                          <span>{item}</span>
-                        </li>
-                      )) : 
-                      <li className="text-sm text-gray-400">{activeQ?.feedback?.ideal_answer_outline || 'Structure not provided.'}</li>
-                    }
-                  </ul>
+                <h4 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3 flex items-center gap-2">
+                  <Layers className="w-3.5 h-3.5" /> Hints
+                </h4>
+                <div className="space-y-2">
+                  {activeQ.hints.map((hint, idx) => (
+                    <div key={idx} className="flex items-start gap-3 text-sm text-gray-400">
+                      <ChevronRight className="w-3.5 h-3.5 text-gray-600 shrink-0 mt-0.5" />
+                      <span>{hint}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
+            )}
 
-              {activeQ?.feedback?.follow_up_questions && activeQ.feedback.follow_up_questions.length > 0 && (
-                <div>
-                   <h4 className="text-gray-400 font-bold mb-3 text-sm">Potential Follow-Up Questions:</h4>
-                   <div className="flex flex-col gap-2">
-                     {activeQ.feedback.follow_up_questions.map((fq, i) => (
-                       <div key={i} className="px-4 py-3 bg-cyan-500/5 text-cyan-300 text-sm rounded-lg border border-cyan-500/10 border-l-2 border-l-cyan-500">
-                         "{fq}"
-                       </div>
-                     ))}
-                   </div>
-                </div>
-              )}
+            {/* Info box */}
+            <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-sm text-gray-400 leading-relaxed">
+              <span className="text-white font-semibold">How to use: </span>
+              Read the question carefully and think through your answer. Use the hints if you get stuck. When ready, you'd submit your answer for Nova Pro to score and give detailed feedback.
             </div>
 
           </motion.div>
         </AnimatePresence>
       </div>
+
     </div>
   )
 }

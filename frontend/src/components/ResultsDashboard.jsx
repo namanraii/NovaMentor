@@ -6,10 +6,10 @@ import Roadmap from './Roadmap'
 import MockInterview from './MockInterview'
 
 const TABS = [
-  { id: 'overview', label: 'Profile', icon: <User className="w-4 h-4" /> },
-  { id: 'gaps', label: 'Gap Analysis', icon: <Target className="w-4 h-4" /> },
-  { id: 'roadmap', label: 'Roadmap', icon: <Map className="w-4 h-4" /> },
-  { id: 'interview', label: 'Mock Interview', icon: <Mic className="w-4 h-4" /> },
+  { id: 'overview', label: 'Profile', icon: <User className="w-3.5 h-3.5" /> },
+  { id: 'gaps', label: 'Gap Analysis', icon: <Target className="w-3.5 h-3.5" /> },
+  { id: 'roadmap', label: 'Roadmap', icon: <Map className="w-3.5 h-3.5" /> },
+  { id: 'interview', label: 'Mock Interview', icon: <Mic className="w-3.5 h-3.5" /> },
 ]
 
 export default function ResultsDashboard({ data, tab, setTab, onReset }) {
@@ -17,55 +17,51 @@ export default function ResultsDashboard({ data, tab, setTab, onReset }) {
 
   return (
     <div className="w-full max-w-6xl mx-auto">
-      
-      {/* Top action bar */}
-      <div className="flex items-center justify-between mb-8">
+
+      {/* Top bar */}
+      <div className="flex items-center justify-between mb-10">
         <div>
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-            Analysis Complete
-          </h2>
-          <p className="text-gray-400 mt-1">Here is your customized career action plan.</p>
+          <h2 className="text-3xl font-bold">Analysis Complete</h2>
+          <p className="text-gray-500 mt-1 text-sm">Your personalised career action plan is ready.</p>
         </div>
-        <button 
+        <button
           onClick={onReset}
-          className="flex items-center gap-2 px-4 py-2 bg-[#0a1628] border border-[#1e3a5f] hover:border-cyan-500/50 hover:bg-cyan-500/10 rounded-lg text-sm text-gray-300 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.05] border border-white/10 hover:bg-white/[0.08] text-gray-400 text-sm transition-colors"
         >
-          <RefreshCcw className="w-4 h-4" /> New Resume
+          <RefreshCcw className="w-3.5 h-3.5" /> New Resume
         </button>
       </div>
 
       {/* Tabs */}
-      <div className="flex flex-wrap gap-2 mb-8 border-b border-[#1e3a5f] pb-4">
+      <div className="flex flex-wrap gap-1.5 mb-8 p-1 bg-white/[0.03] border border-white/10 rounded-xl w-fit">
         {TABS.map(t => (
           <button
             key={t.id}
             onClick={() => setTab(t.id)}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
-              tab === t.id 
-                ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-[0_0_15px_rgba(0,212,255,0.3)]' 
-                : 'bg-[#0a1628] text-gray-400 border border-[#1e3a5f] hover:border-gray-500'
-            }`}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200
+              ${tab === t.id
+                ? 'bg-white text-[#0d0f14]'
+                : 'text-gray-500 hover:text-gray-300'}`}
           >
             {t.icon} {t.label}
           </button>
         ))}
       </div>
 
-      {/* Content Area */}
-      <div className="relative min-h-[500px]">
-        <AnimatePresence mode='wait'>
+      {/* Tab content */}
+      <div className="min-h-[400px]">
+        <AnimatePresence mode="wait">
           <motion.div
             key={tab}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.25 }}
-            className="w-full"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
           >
             {tab === 'overview' && <ProfileCard profile={profile} score={gaps?.readiness_score} />}
             {tab === 'gaps' && <GapAnalysis gaps={gaps} />}
             {tab === 'roadmap' && <Roadmap roadmap={roadmap} />}
-            {tab === 'interview' && <MockInterview questions={data?.mock_interview} />}
+            {tab === 'interview' && <MockInterview mockInterview={data?.mock_interview} />}
           </motion.div>
         </AnimatePresence>
       </div>
