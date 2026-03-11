@@ -6,7 +6,7 @@
 ---
 
 ## 🔗 Live Demo
-- **Frontend** (Vercel): `[deploy frontend/ to Vercel]`
+- **Frontend** (Vercel): `https://nova-mentor-phi.vercel.app`
 - **Backend** (Render): `https://novamentor-api.onrender.com`
 
 ---
