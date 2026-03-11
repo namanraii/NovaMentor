@@ -4,7 +4,7 @@ from agents.gap_analyst import analyze_gaps
 from agents.roadmap_generator import generate_roadmap
 from agents.mock_interview import run_mock_interview_session
 
-def run_careerforge(
+def run_novamentor(
     resume_text: str,
     github_url: str,
     target_companies: list,

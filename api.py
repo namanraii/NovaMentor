@@ -1,7 +1,7 @@
 # api.py — NovaMentor Backend
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
-from agents.orchestrator import run_careerforge
+from agents.orchestrator import run_novamentor
 from utils.resume_parser import extract_text
 from dotenv import load_dotenv
 import json
@@ -35,7 +35,7 @@ async def analyze(
 
     company_list = [c.strip() for c in companies.split(',')]
 
-    result = run_careerforge(
+    result = run_novamentor(
         resume_text, github_url, company_list, target_role
     )
     return result
