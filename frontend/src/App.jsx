@@ -88,7 +88,7 @@ function Header() {
           style={{background:"linear-gradient(135deg,#a78bfa,#818cf8)",boxShadow:"0 2px 12px rgba(167,139,250,0.3)"}}>
           ⚡
         </div>
-        <span className="font-semibold text-white/90 tracking-tight">CareerForge</span>
+        <span className="font-semibold text-white/90 tracking-tight">NovaMentor</span>
         <span className="text-white/20 font-light">AI</span>
       </div>
       <div className="flex items-center gap-2 text-xs px-3.5 py-1.5 rounded-full"

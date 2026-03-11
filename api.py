@@ -1,4 +1,4 @@
-# api.py — CareerForge AI Backend
+# api.py — NovaMentor Backend
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from agents.orchestrator import run_careerforge
@@ -8,7 +8,7 @@ import json
 
 load_dotenv()
 
-app = FastAPI(title='CareerForge AI', version='1.0.0')
+app = FastAPI(title='NovaMentor', version='1.0.0')
 
 # Allow React dev server to call this API
 app.add_middleware(
@@ -21,7 +21,7 @@ app.add_middleware(
 
 @app.get('/')
 async def root():
-    return {'status': 'CareerForge AI is running'}
+    return {'status': 'NovaMentor is running'}
 
 @app.post('/analyze')
 async def analyze(

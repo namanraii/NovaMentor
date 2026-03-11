@@ -1,4 +1,4 @@
-# CareerForge AI 🚀
+# NovaMentor 🚀
 
 > A free, multi-agent AI career coaching system powered by **Amazon Nova** on AWS Bedrock.  
 > Built for the **Amazon Nova AI Hackathon 2026 — Agentic AI Category | Prize Pool: $40,000 USD**
@@ -49,7 +49,7 @@
 ## 📁 Project Structure
 
 ```
-careerforge-ai/
+novamentor/
 ├── api.py                     ← FastAPI app (main entry point)
 ├── main.py                    ← Legacy Streamlit UI (kept for reference)
 ├── requirements.txt
@@ -92,8 +92,8 @@ careerforge-ai/
 
 ### 1. Clone & backend setup
 ```bash
-git clone https://github.com/namanraii/careerforge-ai.git
-cd careerforge-ai
+git clone https://github.com/namanraii/novamentor.git
+cd novamentor
 
 python3 -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
@@ -172,7 +172,7 @@ Fits comfortably within AWS free tier for hackathon use.
 
 ## 🌍 Impact
 
-Over **400 million students** in developing nations have zero access to professional career coaching. CareerForge AI democratizes this — providing expert-level, personalized guidance entirely free, running on AWS infrastructure that scales globally.
+Over **400 million students** in developing nations have zero access to professional career coaching. NovaMentor democratizes this — providing expert-level, personalized guidance entirely free, running on AWS infrastructure that scales globally.
 
 ---
 

@@ -4,7 +4,7 @@ from utils.resume_parser import extract_text
 from agents.mock_interview import get_interview_questions, evaluate_answer
 
 st.set_page_config(
-    page_title='CareerForge AI',
+    page_title='NovaMentor',
     page_icon='🚀',
     layout='wide',
     initial_sidebar_state='expanded'
@@ -524,7 +524,7 @@ with st.sidebar:
     st.markdown("""
     <div style="text-align:center;padding:8px 0 20px">
       <div style="font-size:2rem">🚀</div>
-      <div style="font-weight:800;font-size:1.1rem;color:#e6edf3">CareerForge AI</div>
+      <div style="font-weight:800;font-size:1.1rem;color:#e6edf3">NovaMentor</div>
       <div style="font-size:0.72rem;color:#7d8590;margin-top:2px">Amazon Nova AI Hackathon</div>
     </div>
     """, unsafe_allow_html=True)
@@ -566,7 +566,7 @@ for key, default in [
 # ─── HEADER ───────────────────────────────────────────────────────────────────
 st.markdown("""
 <div style="padding:8px 0 28px">
-  <div class="hero-title">CareerForge AI</div>
+  <div class="hero-title">NovaMentor</div>
   <div class="hero-sub">Your free AI-powered career coach — built on Amazon Nova</div>
   <div style="margin-top:14px">
     <span class="nova-badge">🧠 Nova Pro</span>

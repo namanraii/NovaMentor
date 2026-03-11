@@ -1,4 +1,4 @@
-# render.yaml — CareerForge AI
+# render.yaml — NovaMentor
 services:
   - type: web
     name: careerforge-api

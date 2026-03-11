@@ -13,7 +13,7 @@ export default function Header() {
           <div className="p-1.5 bg-white/10 rounded-lg border border-white/10">
             <Zap className="w-4 h-4 text-white" strokeWidth={2.5} />
           </div>
-          <span className="text-base font-bold text-white tracking-tight">CareerForge AI</span>
+          <span className="text-base font-bold text-white tracking-tight">NovaMentor</span>
         </motion.div>
 
         <motion.div
