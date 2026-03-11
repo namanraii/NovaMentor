@@ -1,7 +1,7 @@
 # NovaMentor 🚀
 
 > A free, multi-agent AI career coaching system powered by **Amazon Nova** on AWS Bedrock.  
-> Built for the **Amazon Nova AI Hackathon 2026 — Agentic AI Category | Prize Pool: $40,000 USD**
+> Built for the **Amazon Nova AI Hackathon 2026 — Agentic AI Category 
 
 ---
 
